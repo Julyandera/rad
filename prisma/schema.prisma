@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SEX {
+  MALE
+  FEMALE
+}
+
+enum CATEGORY {
+  FOOTWEAR
+  APPAREL
+  BAG
+}
+
+model Product {
+  id          Int              @id @default(autoincrement())
+  name        String
+  category_id Int
+  category    Product_Category @relation(fields: [category_id], references: [id])
+  gender_id   Int
+  gender      Product_Gender   @relation(fields: [gender_id], references: [id])
+  brand_id    Int
+  brand       Product_Brand    @relation(fields: [brand_id], references: [id])
+  slug        String           @unique
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
+}
+
+model Product_Style {
+  id          Int            @id @default(autoincrement())
+  color       String
+  main_image  String
+  images      String[]
+  description String
+  sizes       Product_Size[]
+  created_at  DateTime       @default(now())
+  updated_at  DateTime       @updatedAt
+}
+
+model Product_Size {
+  id         Int           @id @default(autoincrement())
+  size       String
+  price      Int
+  SKU        Int
+  style_id   Int
+  style      Product_Style @relation(fields: [style_id], references: [id])
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+}
+
+model Product_Category {
+  id         Int       @id @default(autoincrement())
+  name       CATEGORY
+  products   Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Product_Gender {
+  id         Int       @id @default(autoincrement())
+  name       SEX
+  products   Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Product_Brand {
+  id         Int       @id @default(autoincrement())
+  name       String
+  products   Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}

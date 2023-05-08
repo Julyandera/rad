@@ -9,15 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^13.3.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
     "@types/react-dom": "18.0.11",
+    "autoplay": "^0.0.4",
     "autoprefixer": "10.4.14",
+    "breakpoints": "^0.0.0",
+    "navigation": "^6.1.0",
     "next": "13.3.0",
+    "pagination": "^0.4.6",
     "postcss": "8.4.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "swiper": "^9.2.4",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "prisma": "^4.13.0"
   }
 }
