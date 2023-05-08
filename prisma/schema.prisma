@@ -24,6 +24,7 @@ enum CATEGORY {
 model Product {
   id          Int              @id @default(autoincrement())
   name        String
+  styles      Product_Style[]
   category_id Int
   category    Product_Category @relation(fields: [category_id], references: [id])
   gender_id   Int
@@ -42,6 +43,8 @@ model Product_Style {
   images      String[]
   description String
   sizes       Product_Size[]
+  product_id  Int
+  product     Product        @relation(fields: [product_id], references: [id])
   created_at  DateTime       @default(now())
   updated_at  DateTime       @updatedAt
 }
