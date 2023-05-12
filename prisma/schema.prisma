@@ -24,7 +24,12 @@ enum CATEGORY {
 model Product {
   id          Int              @id @default(autoincrement())
   name        String
-  styles      Product_Style[]
+  colorway    String
+  Price       Price[]
+  main_image  String
+  images      String[]
+  description String
+  slug        String           @unique
   category_id Int
   category    Product_Category @relation(fields: [category_id], references: [id])
   gender_id   Int
@@ -35,28 +40,24 @@ model Product {
   updated_at  DateTime         @updatedAt
 }
 
-model Product_Style {
-  id          Int            @id @default(autoincrement())
-  color       String
-  main_image  String
-  images      String[]
-  description String
-  sizes       Product_Size[]
-  product_id  Int
-  product     Product        @relation(fields: [product_id], references: [id])
-  slug        String         @unique
-  created_at  DateTime       @default(now())
-  updated_at  DateTime       @updatedAt
+model Size {
+  id         Int      @id @default(autoincrement())
+  size       String
+  quantity   Int
+  Price      Price[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
-model Product_Size {
-  id         Int           @id @default(autoincrement())
-  sku        Json
+model Price {
+  id         Int      @id @default(autoincrement())
   price      Int
-  style_id   Int
-  style      Product_Style @relation(fields: [style_id], references: [id])
-  created_at DateTime      @default(now())
-  updated_at DateTime      @updatedAt
+  product_id Int
+  product    Product  @relation(fields: [product_id], references: [id])
+  size_id    Int
+  size       Size     @relation(fields: [size_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Product_Category {
@@ -81,4 +82,12 @@ model Product_Brand {
   products   Product[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
+}
+
+model Banner {
+  id              Int      @id @default(autoincrement())
+  related_product String
+  images          String[]
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 }

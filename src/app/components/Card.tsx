@@ -1,15 +1,22 @@
 import React from 'react'
 import Link from 'next/link'
+import { ProductType } from '../page'
 
-export default function Card() {
+interface PropsType {
+    products: ProductType
+}
+
+export default function Card({ products }: PropsType) {
+    const price = new Intl.NumberFormat('id-ID', { currency: 'IDR', minimumFractionDigits: 0 }).format(products.price)
+
     return (
-        <Link href="/product/nike" className='flex flex-col gap-3 shadow-[0_0_0_0.1rem_rgba(206,206,206,1)] py-5'>
+        <Link href={`/product/${products.slug}`} className='flex flex-col gap-3 shadow-[0_0_0_0.1rem_rgba(206,206,206,1)] py-5'>
             <div className='w-full px-5'>
-                <img src="https://cdn.shopify.com/s/files/1/0259/7021/2909/products/DZ2820-601-PHSLH000-2000_1360x.jpg?v=1677814826" alt="" className='object-cover' />
+                <img src={products.main_image} alt="" className='object-cover' />
             </div>
             <div className='text-[1.1rem] lg:text-xl max-w-full px-5'>
-                <p className='truncate'>NIKE W AIR JORDAN 1 MID SE</p>
-                <p className='truncate'>IDR 2.129.000</p>
+                <p className='truncate'>{products.name}</p>
+                <p className='truncate'>IDR {price}</p>
             </div>
         </Link>
     )

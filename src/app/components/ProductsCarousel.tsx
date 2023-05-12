@@ -9,9 +9,14 @@ import { Navigation, Autoplay } from 'swiper';
 import 'swiper/swiper.min.css';
 import 'swiper/css/navigation';
 // Components
+import { ProductType } from '../page';
 import Card from './Card';
 
-export default function Shoes() {
+interface PropsType {
+    products: ProductType[]
+}
+
+export default function ProductsCarousel({ products }: PropsType) {
     const swiperRef = useRef<SwiperCore>()
     return (
         <div className='w-full'>
@@ -20,12 +25,7 @@ export default function Shoes() {
                     <div className='w-[95%] flex justify-between items-center'>
                         <div className='flex gap-10'>
                             <div>
-                                <input type="radio" name="products" id="shoes-products" value="shoes-products" className='hidden peer' checked />
-                                <label htmlFor="shoes-products" className='text-[1.2rem] lg:text-[1.4rem] font-bold cursor-pointer text-[#afafaf] peer-checked:text-black'>SHOES</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="products" id="apparel-products" value="apparel-products" className='hidden peer' />
-                                <label htmlFor="apparel-products" className='text-[1.2rem] lg:text-[1.4rem] font-bold cursor-pointer text-[#afafaf] peer-checked:text-black'>APPAREL</label>
+                                <p className='text-[1.2rem] lg:text-[1.4rem] font-bold cursor-pointer'>OUR PICKS FOR YOU</p>
                             </div>
                         </div>
                         <div className='items-carousel-navigation flex gap-2'>
@@ -52,35 +52,16 @@ export default function Shoes() {
                             },
                             1024: {
                                 slidesPerView: 5,
-                                spaceBetween: 0
+                                spaceBetween: 1
                             }
                         }}
                         slidesPerView={2}
-                        spaceBetween={0}>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card />
-                        </SwiperSlide>
+                        spaceBetween={1}>
+                        {products.map(product => (
+                            <SwiperSlide>
+                                <Card products={product} />
+                            </SwiperSlide>
+                        ))}
                     </Swiper>
                 </div>
             </div>
