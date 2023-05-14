@@ -10,6 +10,7 @@ type Data = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     await prisma.product.deleteMany();
+    await prisma.size.deleteMany();
     await prisma.product_Brand.deleteMany();
     await prisma.product_Category.deleteMany();
     await prisma.product_Gender.deleteMany();
@@ -18,6 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     await prisma.product_Category.createMany({
         data: [{ name: "FOOTWEAR" }, { name: "APPAREL" }, { name: "BAG" }],
+    });
+
+    await prisma.product_Gender.createMany({
+        data: [{ name: "MALE" }, { name: "FEMALE" }, { name: "UNISEX" }],
     });
 
     await prisma.product_Brand.createMany({
@@ -29,10 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             { name: "PUMA" },
             { name: "NEW BALANCE" },
         ],
-    });
-
-    await prisma.product_Gender.createMany({
-        data: [{ name: "MALE" }, { name: "FEMALE" }],
     });
 
     const categories = await prisma.product_Category.findMany();
@@ -61,8 +62,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NIKE ISPA SENSE FLYKNIT",
                 colorway: "PHANTOM/BLACK-COCONUT MILK",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/AURORA_CW3203-001_PHSLH001-2000_1360x.jpg?v=1683106868",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/AURORA_CW3203-001_PHSLH001-2000_1360x.jpg?v=1683106868",
                     "https://atmos.co.id/cdn/shop/files/AURORA_CW3203-001_PHCFH001-2000_1360x.png?v=1683106869",
@@ -70,11 +69,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/AURORA_CW3203-001_PHCBH000-2000_1360x.png?v=1683106869",
                 ],
                 description: "Breathe in. Breathe out. The ISPA Sense is your ticket to tranquility. Mixing sustainable materials (it's made with at least 20% recycled content by weight) with meditative comfort, the design pulls inspiration from Zen gardens. The stretchy, bootie-like upper with an airy Flyknit design integrates venting and padding for extra on-foot bliss. Tie it all together with the sleek lacing system and then stay upright with added traction on the outsole. Do good, look good, and overcome the urban environment’s most challenging obstacles with this fresh design that gives new meaning to rest and relaxation.",
-                sku: [
-                    { size: "US 9.5", qty: 10 },
-                    { size: "US 10", qty: 10 },
-                    { size: "US 10.5", qty: 5 },
-                ],
                 price: 3099000,
                 slug: "nike-ispa-sense-flyknit-phantom-black-coconut-milk",
                 category_id: footwearId,
@@ -84,8 +78,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NIKE AIR JORDAN 1 MID",
                 colorway: "AQUATONE/CELESTIAL GOLD-WHITE",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/AURORA_DQ8426-400_PHSLH000-2000_1360x.jpg?v=1682737157",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/AURORA_DQ8426-400_PHSLH000-2000_1360x.jpg?v=1682737157",
                     "https://atmos.co.id/cdn/shop/files/AURORA_DQ8426-400_PHCFH001-2000_1360x.png?v=1682737157",
@@ -93,15 +85,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/AURORA_DQ8426-400_PHCBH000-2000_1360x.png?v=1682737157",
                 ],
                 description: "Inspired by the original AJ1, this mid-top edition maintains the iconic look you love while choice colors and crisp leather give it a distinct identity.",
-                sku: [
-                    { size: "US 8", qty: 0 },
-                    { size: "US 8.5", qty: 0 },
-                    { size: "US 9", qty: 0 },
-                    { size: "US 9.5", qty: 0 },
-                    { size: "US 10", qty: 0 },
-                    { size: "US 10.5", qty: 0 },
-                    { size: "US 11", qty: 10 },
-                ],
                 price: 1939000,
                 slug: "nike-air-jordan-1-mid-aquatone-celestial-gold-white",
                 category_id: footwearId,
@@ -111,8 +94,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NIKE AIR JORDAN 1 ZM AIR CMFT 2",
                 colorway: "LT OREWOOD BRN/BRIGHT CITRUS-SAIL",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/AURORA_DV1307-180_PHSLH000-2000_1360x.jpg?v=1682656298",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/AURORA_DV1307-180_PHSLH000-2000_1360x.jpg?v=1682656298",
                     "https://atmos.co.id/cdn/shop/files/AURORA_DV1307-180_PHCFH001-2000_1360x.png?v=1682656298",
@@ -120,14 +101,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/AURORA_DV1307-180_PHCBH000-2000_1360x.png?v=1682656298",
                 ],
                 description: "Premium suede and Jordan Brand's signature Formula 23 foam come together to give you an extra luxurious (and extra cozy) AJ1. You don't need to play \"either or\" when it comes to choosing style or comfort with this one—which is nice, 'cause you deserve both.",
-                sku: [
-                    { size: "US 8", qty: 0 },
-                    { size: "US 8.5", qty: 0 },
-                    { size: "US 9", qty: 0 },
-                    { size: "US 9.5", qty: 0 },
-                    { size: "US 10", qty: 10 },
-                    { size: "US 10.5", qty: 0 },
-                ],
                 price: 2249000,
                 slug: "nike-air-jordan-1-zm-air-cmft-2-lt-orewood-brn-bright-citrus-sail",
                 category_id: footwearId,
@@ -137,8 +110,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NIKE AIR FORCE 1 07 LX",
                 colorway: "MICA GREEN/COCONUT MILK-PHOTON DUST",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/AURORA_DV7186-300_PHSLH000-2000_1360x.jpg?v=1682590263",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/AURORA_DV7186-300_PHSLH000-2000_1360x.jpg?v=1682590263",
                     "https://atmos.co.id/cdn/shop/files/AURORA_DV7186-300_PHCFH001-2000_1360x.png?v=1682590263",
@@ -146,16 +117,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/AURORA_DV7186-300_PHCBH000-2000_1360x.png?v=1682590263",
                 ],
                 description: "Tumbled leather. Premium canvas. Easy-to-style colors. This AF1 makes a subdued statement, adding the perfect polish to your 'fit. With era-echoing ‘80s construction, we kept everything you love about this modern style staple.",
-                sku: [
-                    { size: "7", qty: 5 },
-                    { size: "7.5", qty: 5 },
-                    { size: "8", qty: 5 },
-                    { size: "8.5", qty: 10 },
-                    { size: "9", qty: 20 },
-                    { size: "9.5", qty: 10 },
-                    { size: "10", qty: 10 },
-                    { size: "10.5", qty: 10 },
-                ],
                 price: 2099000,
                 slug: "nike-air-force-1-07-lx-mica-green-coconut-milk-photon-dust",
                 category_id: footwearId,
@@ -165,8 +126,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NIKE AIR FORCE 1 07 LX",
                 colorway: "TEAM GOLD/BLACK-SAIL",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/AURORA_DV7186-700_PHSLH000-2000_1360x.jpg?v=1680536984",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/AURORA_DV7186-700_PHSLH000-2000_1360x.jpg?v=1680536984",
                     "https://atmos.co.id/cdn/shop/products/AURORA_DV7186-700_PHCFH001-2000_1360x.png?v=1680536984",
@@ -174,18 +133,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/AURORA_DV7186-700_PHCBH000-2000_1360x.png?v=1680536984",
                 ],
                 description: "Tumbled leather. Premium canvas. Easy-to-style colors. This AF1 makes a subdued statement, adding the perfect polish to your 'fit. With era-echoing ‘80s construction, we kept everything you love about this modern style staple.",
-                sku: [
-                    { size: "6", qty: 5 },
-                    { size: "6.5", qty: 5 },
-                    { size: "7", qty: 5 },
-                    { size: "7.5", qty: 5 },
-                    { size: "8", qty: 5 },
-                    { size: "8.5", qty: 10 },
-                    { size: "9", qty: 20 },
-                    { size: "9.5", qty: 10 },
-                    { size: "10", qty: 10 },
-                    { size: "10.5", qty: 10 },
-                ],
                 price: 2099000,
                 slug: "nike-air-force-1-07-lx-team-gold-black-sail",
                 category_id: footwearId,
@@ -195,8 +142,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NIKE AIR FORCE 1 07 LX",
                 colorway: "PALE IVORY/BLACK-STADIUM GREEN",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/DV0791-100-PHSLH000-2000_1360x.jpg?v=1674726502",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/DV0791-100-PHSLH000-2000_1360x.jpg?v=1674726502",
                     "https://atmos.co.id/cdn/shop/products/DV0791-100-PHCFH001-2000_1360x.png?v=1674726499",
@@ -204,15 +149,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/DV0791-100-PHCBH000-2000_1360x.png?v=1674726500",
                 ],
                 description: "Tumbled leather. Premium canvas. Easy-to-style colors. This AF1 makes a subdued statement, adding the perfect polish to your 'fit. With era-echoing ‘80s construction, we kept everything you love about this modern style staple.",
-                sku: [
-                    { size: "US 7", qty: 0 },
-                    { size: "US 8", qty: 0 },
-                    { size: "US 8.5", qty: 0 },
-                    { size: "US 9", qty: 0, price: 2199000 },
-                    { size: "US 9.5", qty: 0, price: 2199000 },
-                    { size: "US 10", qty: 0 },
-                    { size: "US 10.5", qty: 10 },
-                ],
                 price: 2099000,
                 slug: "nike-air-force-1-07-lx-pale-ivory-black-stadium-green",
                 category_id: footwearId,
@@ -222,8 +158,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NEW BALANCE BB550IST",
                 colorway: "SEA SALT/TIMBERWOLF/ALABASTER",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/6_1360x.png?v=1682401838",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/6_1360x.png?v=1682401838",
                     "https://atmos.co.id/cdn/shop/files/5_1360x.png?v=1682401839",
@@ -231,19 +165,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/9_1360x.png?v=1682401839",
                 ],
                 description: "We recreated a timeless classic with the New Balance 550, a tribute to ‘80s pro ballers and the streetwear that defined a hoops generation. With a premium leather upper and a simple and clean design that isn't overbuilt, these shoes were made for the player who knows authenticity.",
-                sku: [
-                    { size: "US 5", qty: 10 },
-                    { size: "US 5.5", qty: 10 },
-                    { size: "US 6", qty: 0 },
-                    { size: "US 7", qty: 10 },
-                    { size: "US 7.5", qty: 10 },
-                    { size: "US 8", qty: 10 },
-                    { size: "US 8.5", qty: 10 },
-                    { size: "US 9", qty: 10 },
-                    { size: "US 9.5", qty: 0 },
-                    { size: "US 10", qty: 0 },
-                    { size: "US 11", qty: 10 },
-                ],
                 price: 2799000,
                 slug: "new-balance-bb550ist-sea-salt-timberwolf-alabaster",
                 category_id: footwearId,
@@ -253,8 +174,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "VANS OLD SKOOL VR3",
                 colorway: "BLACK/MARSHMALLOW",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/Untitleddesign_25_1360x.png?v=1681285456",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/Untitleddesign_25_1360x.png?v=1681285456",
                     "https://atmos.co.id/cdn/shop/products/VN0005UB1KP-ALT2_1360x.jpg?v=1681285457",
@@ -262,15 +181,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/VN0005UB1KP-HERO_1360x.jpg?v=1681285456",
                 ],
                 description: "This season, some of our most iconic Classics have been rebuilt with purposeful choices about the materials we use. Along with uppers made from suede and organic cotton canvas, the Old Skool VR3 utilizes a biobased foam VR3Cush™ footbed for comfort you can feel good about and the new VR3Waffle™ outsole that uses natural rubber while still maintaining the grip and durability that Vans has been known for since ’66.\nOur team has set ambitious sustainability goals. Big or small, all of our efforts add up to positive change. To earn the VR3 Checkerboard globe logo, at least 30% of the product must be made up of one or a combination of recycled, renewable, and/or regenerative materials.",
-                sku: [
-                    { size: "US 7", qty: 10 },
-                    { size: "US 8", qty: 10 },
-                    { size: "US 8.5", qty: 10 },
-                    { size: "US 9", qty: 0 },
-                    { size: "US 9.5", qty: 0 },
-                    { size: "US 10", qty: 10 },
-                    { size: "US 11", qty: 10 },
-                ],
                 price: 1499000,
                 slug: "vans-old-skool-vr3-black-marshmallow",
                 category_id: footwearId,
@@ -280,8 +190,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "ADIDAS ADILETTE 22",
                 colorway: "GREY FIVE (HP6522)",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/HP6522_1_FOOTWEAR_Photography_SideLateralCenterView_transparent_1360x.png?v=1680663568",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/HP6522_1_FOOTWEAR_Photography_SideLateralCenterView_transparent_1360x.png?v=1680663568",
                     "https://atmos.co.id/cdn/shop/products/HP6522_7_FOOTWEAR_Photography_BackLateralTopView_transparent_1360x.png?v=1680663568",
@@ -289,16 +197,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/HP6522_3_FOOTWEAR_Photography_TopPortraitView_transparent_1360x.png?v=1680663568",
                 ],
                 description: "For the design of these adidas slides we looked to topographic maps illustrating expeditions to Mars and the dimensional stages of a new planet. And the futuristic vibes don't end there. They're built with material made in part from sugarcane, one step on the road to a more sustainable future. Wear them on diverse terrain from wet to dry.These slides are made with natural and renewable materials as part of our journey to design out finite resources and help end plastic waste.",
-                sku: [
-                    { size: "UK 5", qty: 10 },
-                    { size: "UK 6", qty: 10 },
-                    { size: "UK 7", qty: 10 },
-                    { size: "UK 8", qty: 0 },
-                    { size: "UK 9", qty: 0 },
-                    { size: "UK 10", qty: 10 },
-                    { size: "UK 11", qty: 10 },
-                    { size: "UK 12", qty: 10 },
-                ],
                 price: 840000,
                 slug: "adidas-adelite-22-grey-five-hp6522",
                 category_id: footwearId,
@@ -308,8 +206,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "ADIDAS ADILETTE 22",
                 colorway: "MAGIC LIME (GY1597)",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/GY1597_1_FOOTWEAR_Photography_SideLateralCenterView_transparent_1360x.png?v=1670927500",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/GY1597_1_FOOTWEAR_Photography_SideLateralCenterView_transparent_1360x.png?v=1670927500",
                     "https://atmos.co.id/cdn/shop/products/GY1597_6_FOOTWEAR_Photography_FrontLateralTopView_transparent_1360x.png?v=1670927501",
@@ -317,16 +213,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/GY1597_3_FOOTWEAR_Photography_TopPortraitView_transparent_1360x.png?v=1670927499",
                 ],
                 description: "These adidas Adilette Slides answer the question, \"What would slides look like in space?\" Inspired by 3D topography and human expeditions to Mars, they defy gravity with futuristic design details. The contoured footbed and soft rubber outsole ensure maximum comfort whether you're hitting the showers or the streets.",
-                sku: [
-                    { size: "UK 5", qty: 10 },
-                    { size: "UK 6", qty: 10 },
-                    { size: "UK 7", qty: 10 },
-                    { size: "UK 8", qty: 10 },
-                    { size: "UK 9", qty: 10 },
-                    { size: "UK 10", qty: 10 },
-                    { size: "UK 11", qty: 0 },
-                    { size: "UK 12", qty: 0 },
-                ],
                 price: 840000,
                 slug: "adidas-adelite-22-magic-lime-gy1597",
                 category_id: footwearId,
@@ -336,8 +222,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "ADIDAS ADILETTE 22",
                 colorway: "TECH PURPLE (HP6524)",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/HP6524_1_FOOTWEAR_Photography_SideLateralCenterView_transparent_1360x.png?v=1680663726",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/HP6524_1_FOOTWEAR_Photography_SideLateralCenterView_transparent_1360x.png?v=1680663726",
                     "https://atmos.co.id/cdn/shop/products/HP6524_6_FOOTWEAR_Photography_FrontLateralTopView_transparent_1360x.png?v=1680663727",
@@ -345,11 +229,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/HP6524_3_FOOTWEAR_Photography_TopPortraitView_transparent_1360x.png?v=1680663727",
                 ],
                 description: "For the design of these adidas slides we looked to topographic maps illustrating expeditions to Mars and the dimensional stages of a new planet. And the futuristic vibes don't end there. They're built with material made in part from sugarcane, one step on the road to a more sustainable future. Wear them on diverse terrain from wet to dry.These slides are made with natural and renewable materials as part of our journey to design out finite resources and help end plastic waste.",
-                sku: [
-                    { size: "UK 6", qty: 10 },
-                    { size: "UK 7", qty: 0 },
-                    { size: "UK 8", qty: 0 },
-                ],
                 price: 840000,
                 slug: "adidas-adelite-22-tech-purple-hp6524",
                 category_id: footwearId,
@@ -359,8 +238,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "CONVERSE CHUCK TAYLOR ALL STAR PRO CUT OFF",
                 colorway: "BLACK/BLACK/EGRET",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/A02136C_2_93e8e388-2d5b-4477-b539-34f34a24c1fd_1360x.jpg?v=1655981412",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/A02136C_2_93e8e388-2d5b-4477-b539-34f34a24c1fd_1360x.jpg?v=1655981412",
                     "https://atmos.co.id/cdn/shop/products/A02136C_1_848ba939-3c8a-4f92-a21b-9eee09bd691f_1360x.jpg?v=1655981412",
@@ -368,14 +245,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/A02136C_5_28d7a0cf-fa00-4a9d-86eb-0dbda67891ed_1360x.jpg?v=1655981410",
                 ],
                 description: "Reborn for skateboarding. The Converse CONS Chuck Taylor All Star Pro Mid Top shoe infuses all of the essential design cues of the 1917 original with performance technology to make it a true, skate-ready silhouette. Fully updated for summer with a cut-off, mid-top look inspired by our skateboarding team's customization preferences and a 100% recycled polyester canvas upper, this go-to is ready to ride. A molded CX foam sockliner for cushioning, traction rubber outsole for better boardfeel, and rubber-backed suede for durability rounds out the performance package.",
-                sku: [
-                    { size: "US 7", qty: 10 },
-                    { size: "US 7.5", qty: 10 },
-                    { size: "US 8.5", qty: 10 },
-                    { size: "US 9.5", qty: 10 },
-                    { size: "US 10", qty: 10 },
-                    { size: "US 11", qty: 10 },
-                ],
                 price: 1199000,
                 slug: "converse-chuck-taylor-all-star-pro-cut-off-black-black-egret",
                 category_id: footwearId,
@@ -385,8 +254,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "CONVERSE CHUCK TAYLOR ALL STAR PRO CUT OFF",
                 colorway: "EGRET/RED/CLEMATIS BLUE",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/A02137C_2_323ca8cb-0502-49fd-8cdb-3778b73e5607_1360x.jpg?v=1655981393",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/A02137C_2_323ca8cb-0502-49fd-8cdb-3778b73e5607_1360x.jpg?v=1655981393",
                     "https://atmos.co.id/cdn/shop/products/A02137C_1_79bb4388-4ee2-477c-8fb4-5472bc9e4876_1360x.jpg?v=1655981393",
@@ -394,14 +261,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/A02137C_5_57415c5d-7b40-4ee5-ac8b-85c74889255f_1360x.jpg?v=1655981388",
                 ],
                 description: "Reborn for skateboarding. The Converse CONS Chuck Taylor All Star Pro Mid Top shoe infuses all of the essential design cues of the 1917 original with performance technology to make it a true, skate-ready silhouette. Fully updated for summer with a cut-off, mid-top look inspired by our skateboarding team's customization preferences and a 100% recycled polyester canvas upper, this go-to is ready to ride. A molded CX foam sockliner for cushioning, traction rubber outsole for better boardfeel, and rubber-backed suede for durability rounds out the performance package.",
-                sku: [
-                    { size: "US 7", qty: 10 },
-                    { size: "US 7.5", qty: 10 },
-                    { size: "US 8.5", qty: 10 },
-                    { size: "US 9.5", qty: 10 },
-                    { size: "US 10", qty: 10 },
-                    { size: "US 11", qty: 10 },
-                ],
                 price: 1199000,
                 slug: "converse-chuck-taylor-all-star-pro-cut-off-egret-red-clematis-blue",
                 category_id: footwearId,
@@ -411,8 +270,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "PUMA MAYZE SD X DUA LIPA",
                 colorway: "BLUE BLACK",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/387294_05_sv01_1360x.jpg?v=1657784653",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/387294_05_sv01_1360x.jpg?v=1657784653",
                     "https://atmos.co.id/cdn/shop/products/387294_05_1360x.png?v=1657784653",
@@ -420,14 +277,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/387294_05_bv_1360x.png?v=1657784653",
                 ],
                 description: "The second season of PUMA x DUA LIPA is here, and the collection is filled with bold styles with ‘90s influence. This version of the Mayze is no exception, with a stacked sole, and vibrant accents throughout. It’s for the hype girls and the trendsetters – just like Dua.",
-                sku: [
-                    { size: "UK 4", qty: 10 },
-                    { size: "UK 4.5", qty: 10 },
-                    { size: "UK 5", qty: 10 },
-                    { size: "UK 5.5", qty: 0 },
-                    { size: "UK 6", qty: 10 },
-                    { size: "UK 6.5", qty: 0 },
-                ],
                 price: 2199000,
                 slug: "puma-mayze-sd-x-dua-lipa-blue-black",
                 category_id: footwearId,
@@ -437,8 +286,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "ADIDAS SUPERSTAR MILLENCON W",
                 colorway: "FTWR WHITE (HQ9018)",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/HQ9018_5_FOOTWEAR_Photography_SideMedialCenterView_transparent_1360x.jpg?v=1683173597",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/HQ9018_5_FOOTWEAR_Photography_SideMedialCenterView_transparent_1360x.jpg?v=1683173597",
                     "https://atmos.co.id/cdn/shop/files/HQ9018_6_FOOTWEAR_Photography_FrontLateralTopView_transparent_1360x.png?v=1683173598",
@@ -446,16 +293,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/HQ9018_7_FOOTWEAR_Photography_BackLateralTopView_transparent_1360x.png?v=1683173598",
                 ],
                 description: "From '70s hardwood classic to everyday footwear staple, the adidas Superstar sneaker is a boundary-breaking icon. This version of the shoes dials it up a notch with statement-making proportions emphasized through the interplay of the upper and midsole. The sleek leather upper is taken over by a thick, fluid midsole with double-layered foxing tape for a futuristic feel. A memory foam sockliner lets you stride in comfort and confidence.",
-                sku: [
-                    { size: "UK 4", qty: 10 },
-                    { size: "UK 4.5", qty: 10 },
-                    { size: "UK 5", qty: 10 },
-                    { size: "UK 5.5", qty: 10 },
-                    { size: "UK 6", qty: 10 },
-                    { size: "UK 6.5", qty: 10 },
-                    { size: "UK 7", qty: 10 },
-                    { size: "UK 7.5", qty: 10 },
-                ],
                 price: 1800000,
                 slug: "adidas-superstar-millencon-w-ftwr-white",
                 category_id: footwearId,
@@ -465,8 +302,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "NEW BALANCE M990BT3",
                 colorway: "TAN/BLUE",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/19_1360x.png?v=1682568861",
                 images: [
                     "https://atmos.co.id/cdn/shop/files/19_1360x.png?v=1682568861",
                     "https://atmos.co.id/cdn/shop/files/18_1360x.png?v=1682568861",
@@ -474,17 +309,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/files/17_1360x.png?v=1682568861",
                 ],
                 description: "The 990’s original designers were tasked with creating the single best running shoe on the market. The finished product more than lived up to its billing. When it hit shelves for the first time in 1982 the 990 sported an elegantly understated grey colorway, and a then unheard of three-figure price tag. For avid runners and ahead of the curve tastemakers alike, the 990 was a mark of quality and superior taste. There have been updates to the design since ’82, and more color options, but the 990’s aspirational status symbol aura has never changed. Simply put, the 990 is the shoe so good, that we’ve never stopped making it. The 990v3 features a premium upper construction and ENCAP midsole cushioning.",
-                sku: [
-                    { size: "US 7", qty: 10 },
-                    { size: "US 7.5", qty: 10 },
-                    { size: "US 8", qty: 10 },
-                    { size: "US 8.5", qty: 0 },
-                    { size: "US 9", qty: 10 },
-                    { size: "US 9.5", qty: 0 },
-                    { size: "US 10", qty: 0 },
-                    { size: "US 11", qty: 10 },
-                    { size: "US 12", qty: 0 },
-                ],
                 price: 4999000,
                 slug: "new-balance-m990bt3-tan-blue",
                 category_id: footwearId,
@@ -494,8 +318,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             {
                 name: "CONVERSE X A-COLD-WALL CHUCK 70 GEO",
                 colorway: "LILY WHITE/POPPY SEED",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/NewProject-2023-03-16T142458.152_1360x.png?v=1678951631",
                 images: [
                     "https://atmos.co.id/cdn/shop/products/NewProject-2023-03-16T142458.152_1360x.png?v=1678951631",
                     "https://atmos.co.id/cdn/shop/products/NewProject-2023-03-16T142307.512_1360x.png?v=1678951631",
@@ -503,15 +325,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     "https://atmos.co.id/cdn/shop/products/NewProject-2023-03-16T142517.361_1360x.png?v=1678951631",
                 ],
                 description: "Converse and A-COLD-WALL* continue their successful collaboration with this innovative functional-progressive geo-forma boot. The futuristic sneaker is completely in different shades of white and combines futuristic design with avant-garde style.",
-                sku: [
-                    { size: "US 4", qty: 10 },
-                    { size: "US 5.5", qty: 10 },
-                    { size: "US 6.5", qty: 10 },
-                    { size: "US 7", qty: 0 },
-                    { size: "US 7.5", qty: 0 },
-                    { size: "US 8.5", qty: 0 },
-                    { size: "US 9.5", qty: 0 }
-                ],
                 price: 2999000,
                 slug: "converse-x-a-cold-wall-chuck-70-geo-lily-white-poppy-seed",
                 category_id: footwearId,
@@ -519,182 +332,962 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 brand_id: converseId,
             },
             // APPAREL //
-            {
-                name: "PUMA X DUA LIPA BRALETTE BLACK",
-                colorway: "BLACK",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_1360x.webp?v=1683189598",
-                images: [
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_1360x.webp?v=1683189598",
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_2_1360x.webp?v=1683189597",
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_1_1360x.webp?v=1683189598",
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_3_1360x.webp?v=1683189598",
-                ],
-                description: "The second season of PUMA x DUA LIPA has arrived. This season’s line mixes streetwear and sport with bright, ‘90s rave-inspired colours and bold graphics that draw inspiration from basketball and football culture. This cute bralette features a boatneck neckline and the signature DUA LIPA butterfly embroidered on the chest – for that playful DUA LIPA style we love.",
-                sku: [
-                    { size: "S", qty: 10 },
-                    { size: "M", qty: 10 }
-                ],
-                price: 949000,
-                slug: "puma-x-dua-lipa-bralette-black",
-                category_id: apparelId,
-                gender_id: femaleId,
-                brand_id: pumaId,
-            },
-            {
-                name: "PUMA X DUA LIPA DRESS PUMA BLACK",
-                colorway: "BLACK",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Dress-Women_1360x.webp?v=1683188976",
-                images: [
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Dress-Women_1360x.webp?v=1683188976",
-                    "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Dress-Women_1_1360x.webp?v=1683188975",
-                ],
-                description: "The second season of PUMA x DUA LIPA has arrived. This season’s line mixes streetwear and sport with bright, ‘90s rave-inspired colours and bold graphics that draw inspiration from basketball and football culture, and celebrates the pop icon. This regular-length dress features double-faced jacquard fabric, making it a versatile casual piece for everyday wear.",
-                sku: [
-                    { size: "S", qty: 10 },
-                    { size: "M", qty: 10 },
-                    { size: "L", qty: 10 },
-                    { size: "XL", qty: 10 }
-                ],
-                price: 1499000,
-                slug: "puma-x-dua-lipa-dress-puma-black",
-                category_id: apparelId,
-                gender_id: femaleId,
-                brand_id: pumaId,
-            },
-            {
-                name: "PUMA X BUTTER GOODS LIGHTWEIGHT POP OVER",
-                colorway: "BLUE",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/22-04-2022_JA_534055-84_1_1_1360x.webp?v=1681282631",
-                images: [
-                    "https://atmos.co.id/cdn/shop/products/22-04-2022_JA_534055-84_1_1_1360x.webp?v=1681282631",
-                ],
-                description: "PUMA X BUTTER GOODS LIGHTWEIGHT POP OVER",
-                sku: [
-                    { size: "M", qty: 10 }
-                ],
-                price: 3199000,
-                slug: "puma-x-butter-goods-lightweight-pop-over",
-                category_id: apparelId,
-                gender_id: maleId,
-                brand_id: pumaId,
-            },
-            {
-                name: "VANS MOONEYES FLEECE PO",
-                colorway: "BLACK",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT9_1360x.jpg?v=1662967777",
-                images: [
-                    "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT9_1360x.jpg?v=1662967777",
-                    "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-HERO_1360x.jpg?v=1662967777",
-                    "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT1_1360x.jpg?v=1662967778",
-                    "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT2_1360x.jpg?v=1662967778",
-                ],
-                description: "Mooneyes products and logos are an indelible part of hot rod nostalgia, easily recognizable to gearheads and novices alike. Located in Santa Fe Springs, California, since the 1950s, Mooneyes is known for producing high quality parts for hot rods and motorcycles that look great and get the job done right. Paying tribute to the storied histories of both Vans and Mooneyes, the Mooneyes Fleece Pullover blends iconic branding from both companies with comfy fleece and classic hoodie styling",
-                sku: [
-                    { size: "M", qty: 10 },
-                    { size: "L", qty: 10 },
-                    { size: "XL", qty: 10 }
-                ],
-                price: 1399000,
-                slug: "vans-mooneyes-fleece-po-black",
-                category_id: apparelId,
-                gender_id: maleId,
-                brand_id: vansId,
-            },
-            {
-                name: "VANS MOONEYES SS TEE",
-                colorway: "VIBRANT YELLOW",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT9_1360x.webp?v=1661771148",
-                images: [
-                    "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT9_1360x.webp?v=1661771148",
-                    "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT10_1360x.webp?v=1661771149",
-                    "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT2_1360x.webp?v=1661771149",
-                    "https://atmos.co.id/cdn/shop/products/VN0000B9189-HERO_1360x.jpg?v=1661771150",
-                ],
-                description: "Mooneyes products and logos are an indelible part of hot rod nostalgia, easily recognizable to gearheads and novices alike. Located in Santa Fe Springs, California, since the 1950s, Mooneyes is known for producing high quality parts for hot rods and motorcycles that look great and get the job done right. Paying tribute to the storied histories of both Vans and Mooneyes, the Mooneyes T-Shirt blends iconic branding from both companies with heavy weight carded ringspun cotton and an eye-catching yellow colorway.",
-                sku: [
-                    { size: "S", qty: 10 },
-                    { size: "M", qty: 0 },
-                    { size: "L", qty: 10 },
-                    { size: "XL", qty: 0 }
-                ],
-                price: 699000,
-                slug: "vans-mooneyes-ss-tee-vibrant-yellow",
-                category_id: apparelId,
-                gender_id: maleId,
-                brand_id: vansId,
-            },
-            {
-                name: "NIKE AS M NK NRG MTZ TEE SS",
-                colorway: "OCEAN CUBE",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSYM001-2000_1360x.png?v=1677760251",
-                images: [
-                    "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSYM001-2000_1360x.png?v=1677760251",
-                    "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSFM001-2000_1360x.png?v=1677760250",
-                    "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSYM002-2000_1360x.png?v=1677760251",
-                    "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSBM001-2000_1360x.png?v=1677760252",
-                ],
-                description: "Made with heavyweight cotton in a roomy fit for easy comfort and laid-back vibes, this Nike tee features geometric graphics on the front, with our Pinwheel Swoosh design at the center, nodding to our journey forward.",
-                sku: [
-                    { size: "M", qty: 0 },
-                ],
-                price: 549000,
-                slug: "nike-as-m-nk-nrg-mtz-tee-ss-ocean-cube",
-                category_id: apparelId,
-                gender_id: maleId,
-                brand_id: nikeId,
-            },
-            {
-                name: "NIKE AS M NK NRG MTZ TEE SS",
-                colorway: "DOLL",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM001-2000_1360x.png?v=1677760087",
-                images: [
-                    "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM001-2000_1360x.png?v=1677760087",
-                    "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM003-2000_1360x.png?v=1677760087",
-                    "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM002-2000_1360x.png?v=1677760088",
-                    "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSBM001-2000_1360x.png?v=1677760088",
-                ],
-                description: "Made with heavyweight cotton in a roomy fit for easy comfort and laid-back vibes, this Nike tee features geometric graphics on the front, with our Pinwheel Swoosh design at the center, nodding to our journey forward.",
-                sku: [
-                    { size: "M", qty: 0 },
-                    { size: "L", qty: 0 },
-                ],
-                price: 549000,
-                slug: "nike-as-m-nk-nrg-mtz-tee-ss-doll",
-                category_id: apparelId,
-                gender_id: maleId,
-                brand_id: nikeId,
-            },
-            // BAG //
-            {
-                name: "ADIDAS A.S SHOPPER",
-                colorway: "BLACK",
-                main_image:
-                    "https://atmos.co.id/cdn/shop/products/HZ7256_1_HARDWARE_Photography_FrontCenterView_transparent_1360x.png?v=1674642434",
-                images: [
-                    "https://atmos.co.id/cdn/shop/products/HZ7256_1_HARDWARE_Photography_FrontCenterView_transparent_1360x.png?v=1674642434",
-                    "https://atmos.co.id/cdn/shop/products/HZ7256_4_HARDWARE_Photography_FrontInsideView_transparent_1360x.png?v=1674642435",
-                    "https://atmos.co.id/cdn/shop/products/HZ7256_6_HARDWARE_Photography_DetailView2_transparent_1360x.png?v=1674642436",
-                    "https://atmos.co.id/cdn/shop/products/HZ7256_2_HARDWARE_Photography_BackCenterView_transparent_1360x.png?v=1674642435",
-                ],
-                description: "Walk in style with this adidas shopper, created in collaboration with graffiti artist Andre Saraiva. Equipped with two carry straps, using durable canvas. A bag featuring graphics that celebrate love and acceptance. It's a style that doesn't choose the scene, so you can take it anywhere. Let's leave footprints of love wherever we go.",
-                sku: [
-                    { size: "NS", qty: 10 }
-                ],
-                price: 900000,
-                slug: "adidas-a-s-shopper-black",
-                category_id: bagId,
-                gender_id: femaleId,
-                brand_id: adidasId,
-            }
+            // {
+            //     name: "PUMA X DUA LIPA BRALETTE BLACK",
+            //     colorway: "BLACK",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_1360x.webp?v=1683189598",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_1360x.webp?v=1683189598",
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_2_1360x.webp?v=1683189597",
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_1_1360x.webp?v=1683189598",
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Bralette-Women_3_1360x.webp?v=1683189598",
+            //     ],
+            //     description: "The second season of PUMA x DUA LIPA has arrived. This season’s line mixes streetwear and sport with bright, ‘90s rave-inspired colours and bold graphics that draw inspiration from basketball and football culture. This cute bralette features a boatneck neckline and the signature DUA LIPA butterfly embroidered on the chest – for that playful DUA LIPA style we love.",
+            //     sku: [
+            //         { size: "S", qty: 10 },
+            //         { size: "M", qty: 10 }
+            //     ],
+            //     price: 949000,
+            //     slug: "puma-x-dua-lipa-bralette-black",
+            //     category_id: apparelId,
+            //     gender_id: femaleId,
+            //     brand_id: pumaId,
+            // },
+            // {
+            //     name: "PUMA X DUA LIPA DRESS PUMA BLACK",
+            //     colorway: "BLACK",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Dress-Women_1360x.webp?v=1683188976",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Dress-Women_1360x.webp?v=1683188976",
+            //         "https://atmos.co.id/cdn/shop/files/PUMA-x-DUA-LIPA-Dress-Women_1_1360x.webp?v=1683188975",
+            //     ],
+            //     description: "The second season of PUMA x DUA LIPA has arrived. This season’s line mixes streetwear and sport with bright, ‘90s rave-inspired colours and bold graphics that draw inspiration from basketball and football culture, and celebrates the pop icon. This regular-length dress features double-faced jacquard fabric, making it a versatile casual piece for everyday wear.",
+            //     sku: [
+            //         { size: "S", qty: 10 },
+            //         { size: "M", qty: 10 },
+            //         { size: "L", qty: 10 },
+            //         { size: "XL", qty: 10 }
+            //     ],
+            //     price: 1499000,
+            //     slug: "puma-x-dua-lipa-dress-puma-black",
+            //     category_id: apparelId,
+            //     gender_id: femaleId,
+            //     brand_id: pumaId,
+            // },
+            // {
+            //     name: "PUMA X BUTTER GOODS LIGHTWEIGHT POP OVER",
+            //     colorway: "BLUE",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/products/22-04-2022_JA_534055-84_1_1_1360x.webp?v=1681282631",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/products/22-04-2022_JA_534055-84_1_1_1360x.webp?v=1681282631",
+            //     ],
+            //     description: "PUMA X BUTTER GOODS LIGHTWEIGHT POP OVER",
+            //     sku: [
+            //         { size: "M", qty: 10 }
+            //     ],
+            //     price: 3199000,
+            //     slug: "puma-x-butter-goods-lightweight-pop-over",
+            //     category_id: apparelId,
+            //     gender_id: maleId,
+            //     brand_id: pumaId,
+            // },
+            // {
+            //     name: "VANS MOONEYES FLEECE PO",
+            //     colorway: "BLACK",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT9_1360x.jpg?v=1662967777",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT9_1360x.jpg?v=1662967777",
+            //         "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-HERO_1360x.jpg?v=1662967777",
+            //         "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT1_1360x.jpg?v=1662967778",
+            //         "https://atmos.co.id/cdn/shop/products/VN0000BCBLK-ALT2_1360x.jpg?v=1662967778",
+            //     ],
+            //     description: "Mooneyes products and logos are an indelible part of hot rod nostalgia, easily recognizable to gearheads and novices alike. Located in Santa Fe Springs, California, since the 1950s, Mooneyes is known for producing high quality parts for hot rods and motorcycles that look great and get the job done right. Paying tribute to the storied histories of both Vans and Mooneyes, the Mooneyes Fleece Pullover blends iconic branding from both companies with comfy fleece and classic hoodie styling",
+            //     sku: [
+            //         { size: "M", qty: 10 },
+            //         { size: "L", qty: 10 },
+            //         { size: "XL", qty: 10 }
+            //     ],
+            //     price: 1399000,
+            //     slug: "vans-mooneyes-fleece-po-black",
+            //     category_id: apparelId,
+            //     gender_id: maleId,
+            //     brand_id: vansId,
+            // },
+            // {
+            //     name: "VANS MOONEYES SS TEE",
+            //     colorway: "VIBRANT YELLOW",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT9_1360x.webp?v=1661771148",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT9_1360x.webp?v=1661771148",
+            //         "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT10_1360x.webp?v=1661771149",
+            //         "https://atmos.co.id/cdn/shop/products/VN0000B9189-ALT2_1360x.webp?v=1661771149",
+            //         "https://atmos.co.id/cdn/shop/products/VN0000B9189-HERO_1360x.jpg?v=1661771150",
+            //     ],
+            //     description: "Mooneyes products and logos are an indelible part of hot rod nostalgia, easily recognizable to gearheads and novices alike. Located in Santa Fe Springs, California, since the 1950s, Mooneyes is known for producing high quality parts for hot rods and motorcycles that look great and get the job done right. Paying tribute to the storied histories of both Vans and Mooneyes, the Mooneyes T-Shirt blends iconic branding from both companies with heavy weight carded ringspun cotton and an eye-catching yellow colorway.",
+            //     sku: [
+            //         { size: "S", qty: 10 },
+            //         { size: "M", qty: 0 },
+            //         { size: "L", qty: 10 },
+            //         { size: "XL", qty: 0 }
+            //     ],
+            //     price: 699000,
+            //     slug: "vans-mooneyes-ss-tee-vibrant-yellow",
+            //     category_id: apparelId,
+            //     gender_id: maleId,
+            //     brand_id: vansId,
+            // },
+            // {
+            //     name: "NIKE AS M NK NRG MTZ TEE SS",
+            //     colorway: "OCEAN CUBE",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSYM001-2000_1360x.png?v=1677760251",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSYM001-2000_1360x.png?v=1677760251",
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSFM001-2000_1360x.png?v=1677760250",
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSYM002-2000_1360x.png?v=1677760251",
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-366-PHSBM001-2000_1360x.png?v=1677760252",
+            //     ],
+            //     description: "Made with heavyweight cotton in a roomy fit for easy comfort and laid-back vibes, this Nike tee features geometric graphics on the front, with our Pinwheel Swoosh design at the center, nodding to our journey forward.",
+            //     sku: [
+            //         { size: "M", qty: 0 },
+            //     ],
+            //     price: 549000,
+            //     slug: "nike-as-m-nk-nrg-mtz-tee-ss-ocean-cube",
+            //     category_id: apparelId,
+            //     gender_id: maleId,
+            //     brand_id: nikeId,
+            // },
+            // {
+            //     name: "NIKE AS M NK NRG MTZ TEE SS",
+            //     colorway: "DOLL",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM001-2000_1360x.png?v=1677760087",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM001-2000_1360x.png?v=1677760087",
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM003-2000_1360x.png?v=1677760087",
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSYM002-2000_1360x.png?v=1677760088",
+            //         "https://atmos.co.id/cdn/shop/products/DV0679-530-PHSBM001-2000_1360x.png?v=1677760088",
+            //     ],
+            //     description: "Made with heavyweight cotton in a roomy fit for easy comfort and laid-back vibes, this Nike tee features geometric graphics on the front, with our Pinwheel Swoosh design at the center, nodding to our journey forward.",
+            //     sku: [
+            //         { size: "M", qty: 0 },
+            //         { size: "L", qty: 0 },
+            //     ],
+            //     price: 549000,
+            //     slug: "nike-as-m-nk-nrg-mtz-tee-ss-doll",
+            //     category_id: apparelId,
+            //     gender_id: maleId,
+            //     brand_id: nikeId,
+            // },
+            // // BAG //
+            // {
+            //     name: "ADIDAS A.S SHOPPER",
+            //     colorway: "BLACK",
+            //     main_image:
+            //         "https://atmos.co.id/cdn/shop/products/HZ7256_1_HARDWARE_Photography_FrontCenterView_transparent_1360x.png?v=1674642434",
+            //     images: [
+            //         "https://atmos.co.id/cdn/shop/products/HZ7256_1_HARDWARE_Photography_FrontCenterView_transparent_1360x.png?v=1674642434",
+            //         "https://atmos.co.id/cdn/shop/products/HZ7256_4_HARDWARE_Photography_FrontInsideView_transparent_1360x.png?v=1674642435",
+            //         "https://atmos.co.id/cdn/shop/products/HZ7256_6_HARDWARE_Photography_DetailView2_transparent_1360x.png?v=1674642436",
+            //         "https://atmos.co.id/cdn/shop/products/HZ7256_2_HARDWARE_Photography_BackCenterView_transparent_1360x.png?v=1674642435",
+            //     ],
+            //     description: "Walk in style with this adidas shopper, created in collaboration with graffiti artist Andre Saraiva. Equipped with two carry straps, using durable canvas. A bag featuring graphics that celebrate love and acceptance. It's a style that doesn't choose the scene, so you can take it anywhere. Let's leave footprints of love wherever we go.",
+            //     sku: [
+            //         { size: "NS", qty: 10 }
+            //     ],
+            //     price: 900000,
+            //     slug: "adidas-a-s-shopper-black",
+            //     category_id: bagId,
+            //     gender_id: femaleId,
+            //     brand_id: adidasId,
+            // }
         ],
     });
+
+    const products = await prisma.product.findMany();
+
+    const nikeispasenseflyknitphantomblackcoconutmilk =
+        products.find((product) => product.slug === "nike-ispa-sense-flyknit-phantom-black-coconut-milk")
+            ?.id || 1;
+    const nikeairjordan1midaquatonecelestialgoldwhite =
+        products.find((product) => product.slug === "nike-air-jordan-1-mid-aquatone-celestial-gold-white")
+            ?.id || 1;
+    const nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail =
+        products.find((product) => product.slug === "nike-air-jordan-1-zm-air-cmft-2-lt-orewood-brn-bright-citrus-sail")
+            ?.id || 1;
+    const nikeairforce107lxmicagreencoconutmilkphotondust =
+        products.find((product) => product.slug === "nike-air-force-1-07-lx-mica-green-coconut-milk-photon-dust")
+            ?.id || 1;
+    const nikeairforce107lxteamgoldblacksail =
+        products.find((product) => product.slug === "nike-air-force-1-07-lx-team-gold-black-sail")
+            ?.id || 1;
+    const nikeairforce107lxpaleivoryblackstadiumgreen =
+        products.find((product) => product.slug === "nike-air-force-1-07-lx-pale-ivory-black-stadium-green")
+            ?.id || 1;
+    const newbalancebb550istseasalttimberwolfalabaster =
+        products.find((product) => product.slug === "new-balance-bb550ist-sea-salt-timberwolf-alabaster")
+            ?.id || 1;
+    const vansoldskoolvr3blackmarshmallow =
+        products.find((product) => product.slug === "vans-old-skool-vr3-black-marshmallow")
+            ?.id || 1;
+    const adidasadelite22greyfivehp6522 =
+        products.find((product) => product.slug === "adidas-adelite-22-grey-five-hp6522")
+            ?.id || 1;
+    const adidasadelite22magiclimegy1597 =
+        products.find((product) => product.slug === "adidas-adelite-22-magic-lime-gy1597")
+            ?.id || 1;
+    const adidasadelite22techpurplehp6524 =
+        products.find((product) => product.slug === "adidas-adelite-22-tech-purple-hp6524")
+            ?.id || 1;
+    const conversechucktaylorallstarprocutoffblackblackegret =
+        products.find((product) => product.slug === "converse-chuck-taylor-all-star-pro-cut-off-black-black-egret")
+            ?.id || 1;
+    const conversechucktaylorallstarprocutoffegretredclematisblue =
+        products.find((product) => product.slug === "converse-chuck-taylor-all-star-pro-cut-off-egret-red-clematis-blue")
+            ?.id || 1;
+    const pumamayzesdxdualipablueblack =
+        products.find((product) => product.slug === "puma-mayze-sd-x-dua-lipa-blue-black")
+            ?.id || 1;
+    const adidassuperstarmillenconwftwrwhite =
+        products.find((product) => product.slug === "adidas-superstar-millencon-w-ftwr-white")
+            ?.id || 1;
+    const newbalancem990bt3tanblue =
+        products.find((product) => product.slug === "new-balance-m990bt3-tan-blue")
+            ?.id || 1;
+    const conversexacoldwallchuck70geolilywhitepoppyseed =
+        products.find((product) => product.slug === "converse-x-a-cold-wall-chuck-70-geo-lily-white-poppy-seed")
+            ?.id || 1;
+
+    await prisma.size.createMany({
+        data: [
+            {
+                size: "US 9.5",
+                price: 3099000,
+                qty: 5,
+                product_id: nikeispasenseflyknitphantomblackcoconutmilk
+            },
+            {
+                size: "US 10",
+                price: 3099000,
+                qty: 5,
+                product_id: nikeispasenseflyknitphantomblackcoconutmilk
+            },
+            {
+                size: "US 10.5",
+                price: 3099000,
+                qty: 5,
+                product_id: nikeispasenseflyknitphantomblackcoconutmilk
+            },
+            {
+                size: "US 8",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 8.5",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 9",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 9.5",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 10",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 10.5",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 11",
+                price: 1939000,
+                qty: 5,
+                product_id: nikeairjordan1midaquatonecelestialgoldwhite
+            },
+            {
+                size: "US 8",
+                price: 2249000,
+                qty: 0,
+                product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
+            },
+            {
+                size: "US 8.5",
+                price: 2249000,
+                qty: 0,
+                product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
+            },
+            {
+                size: "US 9",
+                price: 2249000,
+                qty: 0,
+                product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
+            },
+            {
+                size: "US 9.5",
+                price: 2249000,
+                qty: 0,
+                product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
+            },
+            {
+                size: "US 10",
+                price: 2249000,
+                qty: 10,
+                product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
+            },
+            {
+                size: "US 10.5",
+                price: 2249000,
+                qty: 0,
+                product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
+            },
+            {
+                size: "US 7",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 7,5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 8",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 8.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 9",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 9.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 10",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 10.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxmicagreencoconutmilkphotondust
+            },
+            {
+                size: "US 6",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 6.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 7",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 7,5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 8",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 8.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 9",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 9.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 10",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 10.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxteamgoldblacksail
+            },
+            {
+                size: "US 7",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 8",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 8.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 9",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 9.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 10",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 10.5",
+                price: 2099000,
+                qty: 5,
+                product_id: nikeairforce107lxpaleivoryblackstadiumgreen
+            },
+            {
+                size: "US 5",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 5.5",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 6",
+                price: 2799000,
+                qty: 0,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 7",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 7.5",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 8",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 8.5",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 9",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 9.5",
+                price: 2799000,
+                qty: 0,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 10",
+                price: 2799000,
+                qty: 0,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 11",
+                price: 2799000,
+                qty: 5,
+                product_id: newbalancebb550istseasalttimberwolfalabaster
+            },
+            {
+                size: "US 7",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 8",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 8.5",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 9",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 9.5",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 10",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 11",
+                price: 1499000,
+                qty: 5,
+                product_id: vansoldskoolvr3blackmarshmallow
+            },
+            {
+                size: "US 5",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 6",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 7",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 8",
+                price: 840000,
+                qty: 0,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 9",
+                price: 840000,
+                qty: 0,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 10",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 11",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 12",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22greyfivehp6522
+            },
+            {
+                size: "US 5",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 6",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 7",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 8",
+                price: 840000,
+                qty: 10,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 9",
+                price: 840000,
+                qty: 10,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 10",
+                price: 840000,
+                qty: 5,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 11",
+                price: 840000,
+                qty: 0,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 12",
+                price: 840000,
+                qty: 0,
+                product_id: adidasadelite22magiclimegy1597
+            },
+            {
+                size: "US 6",
+                price: 840000,
+                qty: 15,
+                product_id: adidasadelite22techpurplehp6524
+            },
+            {
+                size: "US 7",
+                price: 840000,
+                qty: 0,
+                product_id: adidasadelite22techpurplehp6524
+            },
+            {
+                size: "US 8",
+                price: 840000,
+                qty: 0,
+                product_id: adidasadelite22techpurplehp6524
+            },
+            {
+                size: "US 7",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffblackblackegret
+            },
+            {
+                size: "US 7.5",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffblackblackegret
+            },
+            {
+                size: "US 8.5",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffblackblackegret
+            },
+            {
+                size: "US 9.5",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffblackblackegret
+            },
+            {
+                size: "US 10",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffblackblackegret
+            },
+            {
+                size: "US 11",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffblackblackegret
+            },
+            {
+                size: "US 7",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffegretredclematisblue
+            },
+            {
+                size: "US 7.5",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffegretredclematisblue
+            },
+            {
+                size: "US 8.5",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffegretredclematisblue
+            },
+            {
+                size: "US 9.5",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffegretredclematisblue
+            },
+            {
+                size: "US 10",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffegretredclematisblue
+            },
+            {
+                size: "US 11",
+                price: 1199000,
+                qty: 10,
+                product_id: conversechucktaylorallstarprocutoffegretredclematisblue
+            },
+            {
+                size: "UK 4",
+                price: 2199000,
+                qty: 10,
+                product_id: pumamayzesdxdualipablueblack
+            },
+            {
+                size: "UK 4.5",
+                price: 2199000,
+                qty: 10,
+                product_id: pumamayzesdxdualipablueblack
+            },
+            {
+                size: "UK 5",
+                price: 2199000,
+                qty: 10,
+                product_id: pumamayzesdxdualipablueblack
+            },
+            {
+                size: "UK 5.5",
+                price: 2199000,
+                qty: 0,
+                product_id: pumamayzesdxdualipablueblack
+            },
+            {
+                size: "UK 6",
+                price: 2199000,
+                qty: 10,
+                product_id: pumamayzesdxdualipablueblack
+            },
+            {
+                size: "UK 6.5",
+                price: 2199000,
+                qty: 0,
+                product_id: pumamayzesdxdualipablueblack
+            },
+            {
+                size: "UK 4",
+                price: 1800000,
+                qty: 10,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 4.5",
+                price: 1800000,
+                qty: 10,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 5",
+                price: 1800000,
+                qty: 10,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 5.5",
+                price: 1800000,
+                qty: 0,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 6",
+                price: 1800000,
+                qty: 10,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 6.5",
+                price: 1800000,
+                qty: 0,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 7",
+                price: 1800000,
+                qty: 10,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "UK 7.5",
+                price: 1800000,
+                qty: 0,
+                product_id: adidassuperstarmillenconwftwrwhite
+            },
+            {
+                size: "US 7",
+                price: 4999000,
+                qty: 10,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 7.5",
+                price: 4999000,
+                qty: 10,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 8",
+                price: 4999000,
+                qty: 10,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 8.5",
+                price: 4999000,
+                qty: 0,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 9",
+                price: 4999000,
+                qty: 10,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 9.5",
+                price: 4999000,
+                qty: 0,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 10",
+                price: 4999000,
+                qty: 0,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 11",
+                price: 4999000,
+                qty: 10,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 12",
+                price: 4999000,
+                qty: 0,
+                product_id: newbalancem990bt3tanblue
+            },
+            {
+                size: "US 4",
+                price: 2999000,
+                qty: 10,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+            {
+                size: "US 5.5",
+                price: 2999000,
+                qty: 10,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+            {
+                size: "US 6.5",
+                price: 2999000,
+                qty: 10,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+            {
+                size: "US 7",
+                price: 2999000,
+                qty: 0,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+            {
+                size: "US 7.5",
+                price: 2999000,
+                qty: 0,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+            {
+                size: "US 8.5",
+                price: 2999000,
+                qty: 0,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+            {
+                size: "US 9.5",
+                price: 2999000,
+                qty: 0,
+                product_id: conversexacoldwallchuck70geolilywhitepoppyseed
+            },
+        ]
+    })
+
 
     await prisma.banner.createMany({
         data: [

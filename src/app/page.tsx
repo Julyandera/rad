@@ -8,20 +8,20 @@ const prisma = new PrismaClient()
 
 export interface ProductType {
   id: number,
-  main_image: string,
   name: string,
+  images: string[],
   price: number,
   category_id: number,
   slug: string
 
 }
 
-const fetchProducts = async (): Promise<ProductType[]> => {
+const fetchProducts = async () => {
   const products = await prisma.product.findMany({
     select: {
       id: true,
-      main_image: true,
       name: true,
+      images: true,
       price: true,
       category_id: true,
       slug: true

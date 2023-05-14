@@ -57,8 +57,8 @@ export default function ProductsCarousel({ products }: PropsType) {
                         }}
                         slidesPerView={2}
                         spaceBetween={1}>
-                        {products.map(product => (
-                            <SwiperSlide>
+                        {products.map((product, index) => (
+                            <SwiperSlide key={index}>
                                 <Card products={product} />
                             </SwiperSlide>
                         ))}

@@ -11,8 +11,21 @@ export interface Product {
     colorway: string;
     images: string[];
     description: string;
-    sku: string | number | any;
     price: number;
+    slug: string;
+}
+
+export interface Sku {
+    size: string;
+    price: number;
+    qty: number;
+    product_id: number;
+}
+
+export interface DifferentColor {
+    name: string;
+    colorway: string;
+    images: string[];
     slug: string;
 }
 
@@ -27,9 +40,8 @@ const fetchProductData = async (slug: string): Promise<Product> => {
             colorway: true,
             images: true,
             description: true,
-            sku: true,
             price: true,
-            slug: true
+            slug: true,
         }
     })
 
@@ -40,12 +52,54 @@ const fetchProductData = async (slug: string): Promise<Product> => {
     return product
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
+const fetchSizes = async (product_id: number): Promise<Sku[]> => {
+    const size = await prisma.size.findMany({
+        where: {
+            product_id
+        },
+        select: {
+            size: true,
+            price: true,
+            qty: true,
+            product_id: true
+        }
+    })
+
+    if (!size) {
+        throw new Error()
+    }
+
+    return size
+}
+
+const fetchDifferentColor = async (name: string): Promise<DifferentColor[]> => {
+    const sameProduct = await prisma.product.findMany({
+        where: {
+            name
+        },
+        select: {
+            name: true,
+            colorway: true,
+            images: true,
+            slug: true
+        }
+    })
+
+    if (!sameProduct) {
+        throw new Error()
+    }
+
+    return sameProduct
+}
+
+export default async function ProductPage({ params }: { params: { name: string, slug: string } }) {
     const product = await fetchProductData(params.slug)
+    const sku = await fetchSizes(product.id)
+    const differentColor = await fetchDifferentColor(params.name)
 
     return (
         <div className='w-full lg:flex flex-col justify-center'>
-            <Product product={product} />
+            <Product product={product} sku={sku} differentColor={differentColor} />
             <ProductsCarousel />
         </div>
     );

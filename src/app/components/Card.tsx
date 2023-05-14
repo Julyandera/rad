@@ -12,7 +12,7 @@ export default function Card({ products }: PropsType) {
     return (
         <Link href={`/product/${products.slug}`} className='flex flex-col gap-3 shadow-[0_0_0_0.1rem_rgba(206,206,206,1)] py-5'>
             <div className='w-full px-5'>
-                <img src={products.main_image} alt="" className='object-cover' />
+                <img src={products.images[0]} alt="" className='object-cover' />
             </div>
             <div className='text-[1.1rem] lg:text-xl max-w-full px-5'>
                 <p className='truncate'>{products.name}</p>

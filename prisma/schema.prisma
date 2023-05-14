@@ -10,11 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum SEX {
-  MALE
-  FEMALE
-}
-
 enum CATEGORY {
   FOOTWEAR
   APPAREL
@@ -25,10 +20,10 @@ model Product {
   id          Int              @id @default(autoincrement())
   name        String
   colorway    String
-  Price       Price[]
-  main_image  String
   images      String[]
   description String
+  price       Int
+  Size        Size[]
   slug        String           @unique
   category_id Int
   category    Product_Category @relation(fields: [category_id], references: [id])
@@ -43,19 +38,10 @@ model Product {
 model Size {
   id         Int      @id @default(autoincrement())
   size       String
-  quantity   Int
-  Price      Price[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Price {
-  id         Int      @id @default(autoincrement())
   price      Int
+  qty        Int
   product_id Int
   product    Product  @relation(fields: [product_id], references: [id])
-  size_id    Int
-  size       Size     @relation(fields: [size_id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -70,7 +56,7 @@ model Product_Category {
 
 model Product_Gender {
   id         Int       @id @default(autoincrement())
-  name       SEX
+  name       String
   products   Product[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
