@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${ibmPlexMono.variable} font-mono scroll-smooth text-[62.5%] overflow-x-hidden`}>
-      <body className="bg-white h-screen pt-[60px] lg:pt-[90px] text-primary-black">
+      <body className="bg-white h-screen pt-[60px] lg:pt-[100px] text-primary-black">
         <NavBar />
         <main className="w-full">{children}</main>
         <Footer />

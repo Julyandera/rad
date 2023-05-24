@@ -9,8 +9,8 @@ type Data = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
-    await prisma.product.deleteMany();
     await prisma.size.deleteMany();
+    await prisma.product.deleteMany();
     await prisma.product_Brand.deleteMany();
     await prisma.product_Category.deleteMany();
     await prisma.product_Gender.deleteMany();
@@ -567,7 +567,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         data: [
             {
                 size: "US 9.5",
-                price: 3099000,
+                price: 3100000,
                 qty: 5,
                 product_id: nikeispasenseflyknitphantomblackcoconutmilk
             },
@@ -651,7 +651,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             },
             {
                 size: "US 10",
-                price: 2249000,
+                price: 2300000,
                 qty: 10,
                 product_id: nikeairjordan1zmaircmft2ltorewoodbrnbrightcitrussail
             },

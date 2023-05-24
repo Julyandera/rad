@@ -20,7 +20,8 @@ interface Props {
 
 export default function Product({ product, sku, differentColor }: Props) {
     const [fullDesc, setFullDesc] = useState(false);
-    const [wishlist, setWishlist] = useState(false)
+    const [wishlist, setWishlist] = useState(false);
+    const [selectedSize, setSelectedSize] = useState({});
     const price = new Intl.NumberFormat('id-ID', { currency: 'IDR', minimumFractionDigits: 0 }).format(product.price)
 
     return (
@@ -95,14 +96,15 @@ export default function Product({ product, sku, differentColor }: Props) {
                             <p className='text-[1.3rem]'>SIZES:</p>
                             <div className='flex items-center gap-3 mt-3 flex-wrap'>
                                 {sku.map(i => (
-                                    <div className='bg-primary-gray w-28 h-16 flex items-center justify-center rounded-md'>
-                                        {i.qty === 0 && <input type="radio" name="size" id={i.size} value={i.size} className='hidden peer' disabled />}
-                                        {i.qty != 0 && <input type="radio" name="size" id={i.size} value={i.size} className='hidden peer' />}
-                                        <label htmlFor={i.size} className='grid place-items-center rounded-md text-[1.2rem] lg:text-[1.3rem] w-full h-full tracking-tighter cursor-pointer peer-checked:bg-primary-black peer-checked:text-white'>
-                                            {i.size}
-                                            {i.qty === 0 ? <p className="text-[1rem] lg:text-[1.1rem]">SOLD</p> : ''}
-                                        </label>
-                                    </div>
+                                    <>
+                                        {i.qty != 0 && <div className='bg-primary-gray w-28 h-12 flex items-center justify-center rounded-md'>
+                                            <input type="radio" name="size" id={i.size} value={i.size} className='hidden peer' />
+                                            <label htmlFor={i.size} className='grid place-items-center rounded-md text-[1.2rem] lg:text-[1.3rem] w-full h-full tracking-tighter cursor-pointer peer-checked:bg-primary-black peer-checked:text-white'>
+                                                {i.size}
+                                            </label>
+                                        </div>}
+                                    </>
+
                                 ))}
                             </div>
                         </div>

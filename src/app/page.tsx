@@ -16,6 +16,12 @@ export interface ProductType {
 
 }
 
+export interface BannerType {
+  id: number,
+  related_product: string,
+  images: string[]
+}
+
 const fetchProducts = async () => {
   const products = await prisma.product.findMany({
     select: {
@@ -31,12 +37,25 @@ const fetchProducts = async () => {
   return products
 }
 
+const fetchBanners = async () => {
+  const banners = await prisma.banner.findMany({
+    select: {
+      id: true,
+      related_product: true,
+      images: true
+    }
+  })
+
+  return banners;
+}
+
 export default async function Home() {
   const products = await fetchProducts()
+  const banners = await fetchBanners()
 
   return (
     <div className='w-full'>
-      <Banner />
+      <Banner banners={banners} />
       <Brands />
       <ProductsCarousel products={products} />
     </div>

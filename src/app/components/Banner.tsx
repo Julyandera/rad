@@ -7,8 +7,16 @@ import { Navigation, Pagination, Autoplay } from 'swiper';
 import 'swiper/swiper.min.css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { BannerType } from '../page';
+import Link from 'next/link';
 
-export default function Banner() {
+interface PropsType {
+    banners: BannerType[]
+}
+
+export default function Banner({ banners }: PropsType) {
+    console.log(banners)
+
     return (
         <div className="w-full">
             <Swiper
@@ -23,26 +31,20 @@ export default function Banner() {
                 spaceBetween={0}
                 slidesPerView={1}
             >
-                <SwiperSlide>
-                    <picture>
-                        <source media="only screen and (max-width: 480px) and (orientation:portrait)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_MINI_BANNER_CLOUDMONSTER_EXCLUSIVE_480x@2x.progressive.jpg?v=1681701011" />
-                        <source media="only screen and (max-width: 480px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_CLOUDMONSTER_EXCLUSIVE_480x@2x.progressive.jpg?v=1681701015" />
-                        <source media="only screen and (max-width: 768px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_CLOUDMONSTER_EXCLUSIVE_768x@2x.progressive.jpg?v=1681701015" />
-                        <source media="only screen and (max-width: 992px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_CLOUDMONSTER_EXCLUSIVE_992x@2x.progressive.jpg?v=1681701015" />
-                        <source media="only screen and (max-width: 1280px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_CLOUDMONSTER_EXCLUSIVE_1280x@2x.progressive.jpg?v=1681701015" />
-                        <img src="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_CLOUDMONSTER_EXCLUSIVE_1440x@2x.progressive.jpg?v=1681701015" className='max-w-full object-cover' />
-                    </picture>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <picture>
-                        <source media="only screen and (max-width: 480px) and (orientation:portrait)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_MINI_BANNER_Washed_Pink_480x@2x.progressive.jpg?v=1682375576" />
-                        <source media="only screen and (max-width: 480px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_Washed_Pink_480x@2x.progressive.jpg?v=1682375576" />
-                        <source media="only screen and (max-width: 768px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_Washed_Pink_768x@2x.progressive.jpg?v=1682375576" />
-                        <source media="only screen and (max-width: 992px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_Washed_Pink_992x@2x.progressive.jpg?v=1682375576" />
-                        <source media="only screen and (max-width: 1280px)" srcSet="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_Washed_Pink_1280x@2x.progressive.jpg?v=1682375576" />
-                        <img src="//cdn.shopify.com/s/files/1/0259/7021/2909/files/ATMOS_-_2808_x_936_Washed_Pink_1440x@2x.progressive.jpg?v=1682375576" alt="block.settings.link" className="max-w-full object-cover" />
-                    </picture>
-                </SwiperSlide>
+                {banners.map(banner => (
+                    <SwiperSlide>
+                        <Link href={`/product/${banner.related_product}`} key={banner.id}>
+                            <picture>
+                                <source media="only screen and (max-width: 480px) and (orientation:portrait)" srcSet={banner.images[0]} />
+                                <source media="only screen and (max-width: 480px)" srcSet={banner.images[1]} />
+                                <source media="only screen and (max-width: 768px)" srcSet={banner.images[2]} />
+                                <source media="only screen and (max-width: 992px)" srcSet={banner.images[3]} />
+                                <source media="only screen and (max-width: 1280px)" srcSet={banner.images[4]} />
+                                <img src={banner.images[5]} className='max-w-full object-cover' />
+                            </picture>
+                        </Link>
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </div>
     )

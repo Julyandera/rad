@@ -1,22 +1,24 @@
-import Card from "../components/Card";
+import { Gentium_Book_Plus } from "@next/font/google";
 import { PrismaClient } from "@prisma/client";
-import Header from "../components/Header";
+import Filter from "../../components/Filter";
+import Card from "../../components/Card";
+import Header from "../../components/Header";
+
+const gentiumBookPlus = Gentium_Book_Plus({
+    subsets: ["latin"],
+    variable: "--font-gentiumBookPlus",
+    weight: "400"
+});
 
 const prisma = new PrismaClient()
 
-export interface Products {
-    id: number,
-    name: string,
-    images: string[],
-    price: number,
-    colorway: string,
-    slug: string,
-    category_id: number,
-    gender_id: number
-}
-
-const fetchProducts = async () => {
+const fetchSearchedProducts = async (query: string) => {
     const products = await prisma.product.findMany({
+        where: {
+            name: {
+                contains: query.toUpperCase()
+            }
+        },
         select: {
             id: true,
             name: true,
@@ -32,15 +34,15 @@ const fetchProducts = async () => {
     return products
 }
 
-export default async function Collections({ params }: { params: { slug: string } }) {
-    const products = await fetchProducts()
-    console.log(params.slug)
+export default async function page({ searchParams }: { searchParams: { query: string } }) {
+    const products = await fetchSearchedProducts(searchParams.query)
+
     return (
         <div className="flex flex-col items-center gap-10">
             {products.length != 0
                 ?
                 <>
-                    <Header title={params.slug} products={products} />
+                    <Header title={searchParams.query} products={products} />
                     <Card products={products} />
                 </>
                 :

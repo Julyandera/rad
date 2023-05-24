@@ -34,7 +34,7 @@ export default function NavBar() {
     }
 
     return (
-        <nav className="w-full h-[60px] lg:h-[90px] bg-white fixed top-0 left-0 right-0 z-50">
+        <nav className="w-full h-[60px] lg:h-[100px] bg-white fixed top-0 left-0 right-0 z-50">
             <div className="w-full flex flex-col justify-center items-center pt-6 pb-3 gap-3">
                 {navBackground && (
                     <div className="absolute bg-[rgba(0,0,0,0.4)] h-screen w-full top-full"></div>
@@ -91,7 +91,7 @@ export default function NavBar() {
 
                     <div className="w-1/3 lg:w-5/12 flex items-center">
                         <div className="w-full flex justify-end items-center gap-5 md:gap-10 lg:gap-8">
-                            <div className="search cursor-pointer" onClick={displaySearchModal}>
+                            <button type="button" className="search cursor-pointer" onClick={displaySearchModal}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -106,9 +106,9 @@ export default function NavBar() {
                                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
                                     />
                                 </svg>
-                            </div>
+                            </button>
 
-                            <div className="hidden lg:flex wishlist cursor-pointer">
+                            <Link href={`/user-name/wishlist`} className="hidden lg:flex wishlist cursor-pointer">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -123,9 +123,9 @@ export default function NavBar() {
                                         d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                                     />
                                 </svg>
-                            </div>
+                            </Link>
 
-                            <div className="bag cursor-pointer">
+                            <Link href={`/user-name/bag`} className="bag cursor-pointer">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -140,7 +140,7 @@ export default function NavBar() {
                                         d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                                     />
                                 </svg>
-                            </div>
+                            </Link>
 
                             <Link href='/login' className="user hidden lg:flex cursor-pointer">
                                 <svg
@@ -163,92 +163,92 @@ export default function NavBar() {
                 </div>
                 <div className="nav-panel hidden lg:flex justify-center gap-10 text-[1.3rem]">
                     <div
-                        className="group/men"
+                        className="group/male"
                         onMouseEnter={displayNavBackground}
                         onMouseLeave={hideDisplayNavBackground}
                     >
-                        <span className="cursor-pointer hover:underline h-12 group-hover/men:bg-primary-sand grid place-items-center px-8 rounded-md">
-                            MEN
-                        </span>
-                        <div className="w-screen duration-200 invisible group-hover/men:visible absolute flex justify-center backdrop-blur-md bg-white left-0">
+                        <Link href={`/collections/male`} className="cursor-pointer hover:underline h-12 group-hover/male:bg-primary-sand grid place-items-center px-8 rounded-md">
+                            MALE
+                        </Link>
+                        <div className="w-screen duration-200 invisible group-hover/male:visible absolute flex justify-center backdrop-blur-md bg-white left-0">
                             <div className="w-11/12 grid place-items-center grid-cols-3 my-10">
-                                <div className="cursor-pointer hover:underline">
+                                <Link href={`/collections/male-footwear`} className="cursor-pointer hover:underline">
                                     FOOTWEAR
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link>
+                                <Link href={`/collections/male-apparel`} className="cursor-pointer hover:underline">
                                     APPAREL
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link>
+                                <Link href={`/collections/male-bags`} className="cursor-pointer hover:underline">
                                     BAGS
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
                     <div
-                        className="group/women"
+                        className="group/female"
                         onMouseEnter={displayNavBackground}
                         onMouseLeave={hideDisplayNavBackground}
                     >
-                        <span className="cursor-pointer hover:underline h-12 group-hover/women:bg-primary-sand grid place-items-center px-8 rounded-md">
-                            WOMEN
-                        </span>
-                        <div className="w-screen duration-200 invisible group-hover/women:visible absolute flex justify-center backdrop-blur-md bg-white left-0">
+                        <Link href={`/collections/female`} className="cursor-pointer hover:underline h-12 group-hover/female:bg-primary-sand grid place-items-center px-8 rounded-md">
+                            FEMALE
+                        </Link>
+                        <div className="w-screen duration-200 invisible group-hover/female:visible absolute flex justify-center backdrop-blur-md bg-white left-0">
                             <div className="w-11/12 grid place-items-center grid-cols-3 my-10">
-                                <div className="cursor-pointer hover:underline">
+                                <Link href={`/collections/female-footwear`} className="cursor-pointer hover:underline">
                                     FOOTWEAR
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link>
+                                <Link href={`/collections/female-footwear`} className="cursor-pointer hover:underline">
                                     APPAREL
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link>
+                                <Link href={`/collections/female-footwear`} className="cursor-pointer hover:underline">
                                     BAGS
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <span className="cursor-pointer hover:underline h-12 hover:bg-primary-sand grid place-items-center px-8 rounded-md">
+                        <Link href={`/collections/footwear`} className="cursor-pointer hover:underline h-12 hover:bg-primary-sand grid place-items-center px-8 rounded-md">
                             FOOTWEAR
-                        </span>
+                        </Link>
                     </div>
                     <div>
-                        <span className="cursor-pointer hover:underline h-12 hover:bg-primary-sand grid place-items-center px-8 rounded-md">
+                        <Link href={`/collections/apparel`} className="cursor-pointer hover:underline h-12 hover:bg-primary-sand grid place-items-center px-8 rounded-md">
                             APPAREL
-                        </span>
+                        </Link>
                     </div>
                     <div>
-                        <span className="cursor-pointer hover:underline h-12 hover:bg-primary-sand grid place-items-center px-8 rounded-md">
+                        <Link href={`/collections/bags`} className="cursor-pointer hover:underline h-12 hover:bg-primary-sand grid place-items-center px-8 rounded-md">
                             BAGS
-                        </span>
+                        </Link>
                     </div>
                     <div
                         className="group/brands"
                         onMouseEnter={displayNavBackground}
                         onMouseLeave={hideDisplayNavBackground}
                     >
-                        <span className="cursor-pointer hover:underline h-12 group-hover/brands:bg-primary-sand grid place-items-center px-8 rounded-md">
+                        <span className="hover:underline h-12 group-hover/brands:bg-primary-sand grid place-items-center px-8 rounded-md">
                             BRANDS
                         </span>
                         <div className="w-screen duration-200 invisible group-hover/brands:visible absolute flex justify-center backdrop-blur-md bg-white left-0">
                             <div className="w-11/12 grid place-items-center grid-cols-3 gap-5 my-10">
-                                <div className="cursor-pointer hover:underline">
+                                <Link href={`/collections/nike`} className="cursor-pointer hover:underline">
                                     NIKE
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link>
+                                <Link href={`/collections/adidas`} className="cursor-pointer hover:underline">
                                     ADDIDAS
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link >
+                                <Link href={`/collections/puma`} className="cursor-pointer hover:underline">
                                     PUMA
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link >
+                                <Link href={`/collections/converse`} className="cursor-pointer hover:underline">
                                     CONVERSE
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link >
+                                <Link href={`/collections/vans`} className="cursor-pointer hover:underline">
                                     VANS
-                                </div>
-                                <div className="cursor-pointer hover:underline">
+                                </Link >
+                                <Link href={`/collections/new-balance`} className="cursor-pointer hover:underline">
                                     NEW BALANCE
-                                </div>
+                                </Link >
                             </div>
                         </div>
                     </div>

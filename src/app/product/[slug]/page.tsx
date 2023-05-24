@@ -75,7 +75,9 @@ const fetchSizes = async (product_id: number): Promise<Sku[]> => {
 const fetchDifferentColor = async (name: string): Promise<DifferentColor[]> => {
     const sameProduct = await prisma.product.findMany({
         where: {
-            name
+            name: {
+                equals: name
+            }
         },
         select: {
             name: true,
@@ -92,15 +94,15 @@ const fetchDifferentColor = async (name: string): Promise<DifferentColor[]> => {
     return sameProduct
 }
 
-export default async function ProductPage({ params }: { params: { name: string, slug: string } }) {
+export default async function ProductPage({ params }: { params: { slug: string, name: string } }) {
     const product = await fetchProductData(params.slug)
     const sku = await fetchSizes(product.id)
-    const differentColor = await fetchDifferentColor(params.name)
+    const differentColor = await fetchDifferentColor(product.name)
 
     return (
         <div className='w-full lg:flex flex-col justify-center'>
             <Product product={product} sku={sku} differentColor={differentColor} />
-            <ProductsCarousel />
+            {/* <ProductsCarousel /> */}
         </div>
     );
 }
