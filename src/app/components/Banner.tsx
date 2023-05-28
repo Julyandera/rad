@@ -15,7 +15,6 @@ interface PropsType {
 }
 
 export default function Banner({ banners }: PropsType) {
-    console.log(banners)
 
     return (
         <div className="w-full">

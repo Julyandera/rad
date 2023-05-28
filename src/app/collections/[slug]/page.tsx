@@ -1,6 +1,7 @@
 import Card from "../components/Card";
 import { PrismaClient } from "@prisma/client";
 import Header from "../components/Header";
+import Filter from "../components/Filter";
 
 const prisma = new PrismaClient()
 
@@ -32,15 +33,47 @@ const fetchProducts = async () => {
     return products
 }
 
-export default async function Collections({ params }: { params: { slug: string } }) {
-    const products = await fetchProducts()
-    console.log(params.slug)
+const fetchSearchedProducts = async (query: string) => {
+    const products = await prisma.product.findMany({
+        where: {
+            name: {
+                contains: query.toUpperCase()
+            }
+        },
+        select: {
+            id: true,
+            name: true,
+            images: true,
+            price: true,
+            colorway: true,
+            slug: true,
+            category_id: true,
+            gender_id: true,
+        }
+    })
+
+    return products
+}
+
+export default async function Collections({ params, searchParams }: { params?: { slug: string }, searchParams?: { query: string } }) {
+    let products: Products[]
+    let title: string | undefined
+
+    if (searchParams?.query != undefined) {
+        products = await fetchSearchedProducts(searchParams.query)
+        title = searchParams.query
+    } else {
+        products = await fetchProducts()
+        title = params?.slug
+    }
+
     return (
         <div className="flex flex-col items-center gap-10">
             {products.length != 0
                 ?
                 <>
-                    <Header title={params.slug} products={products} />
+                    <Header title={title} products={products} />
+                    <Filter slug={title} />
                     <Card products={products} />
                 </>
                 :

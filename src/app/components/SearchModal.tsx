@@ -39,7 +39,7 @@ export default function SearchModal(props: any) {
                             <button
                                 onClick={() => {
                                     if (query == "") return;
-                                    router.push(`/collections/search/products?query=${query}`)
+                                    router.push(`/collections/search?query=${query}`)
                                     props.handleClick()
                                 }}
                                 className="search bg-primary-black flex items-center justify-center w-24 h-16 text-white rounded-md">

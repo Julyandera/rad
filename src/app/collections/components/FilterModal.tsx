@@ -1,4 +1,10 @@
+'use client'
+
+import Link from "next/link"
+
 export default function FilterModal(props: any) {
+    console.log(props)
+
     return (
         <div className="absolute top-16 z-20 bg-[rgba(225,225,225,0.5)] backdrop-blur-2xl p-5 w-[90%] lg:w-[50rem] text-[1.2rem] rounded-md shadow-md">
             <div className="flex justify-between items-center pb-3 border-b border-primary-black">
@@ -25,14 +31,27 @@ export default function FilterModal(props: any) {
                 <div className="flex flex-col gap-3 py-3 border-b border-primary-black">
                     <p>GENDER</p>
                     <div className="flex pl-5 gap-3">
-                        <p className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">MALE</p>
-                        <p className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">FEMALE</p>
+                        <Link href={{
+                            pathname: `/collections/${props.slug}`,
+                            query: { ...props.slug, sex: 'male' }
+                        }} className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]"
+                        >
+                            MALE
+                        </Link>
+                        <Link href={{
+                            query: {
+                                gender: 'male',
+                            }
+                        }} className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">FEMALE</Link>
                     </div>
                 </div>
                 <div className="flex flex-col gap-3 py-3 border-b border-primary-black">
                     <p>CATEGORIES</p>
                     <div className="flex flex-wrap pl-5 gap-3">
-                        <p className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">FOOTWEAR</p>
+                        <Link href={{
+                            pathname: `/collections/${props.slug}`,
+                            query: { category: 'footwear' }
+                        }} className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">FOOTWEAR</Link>
                         <p className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">APPAREL</p>
                         <p className="min-w-min h-min py-2 px-10 rounded-md bg-[rgba(171,155,154,0.4)]">BAG</p>
                     </div>

@@ -8,18 +8,17 @@ const gentiumBookPlus = Gentium_Book_Plus({
 })
 
 interface PropsType {
-    title: string;
+    title: string | undefined;
     products: Products[]
 }
 
 export default function Header({ products, title }: PropsType) {
 
     return (
-        <div className="w-[95%] flex flex-col gap-10">
+        <div className="w-[95%] flex flex-col">
             <div className={`${gentiumBookPlus.variable} font-book text-[2.5rem] capitalize`}>
-                {products.length > 1 ? 'Results' : 'Result'} for '{title.replace('-', " ")}'
+                <p>'{title?.replace('-', " ")}' {products.length > 1 ? 'Collections' : 'Collection'}</p>
             </div>
-            <Filter />
         </div>
     )
 }

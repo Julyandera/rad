@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Gentium_Book_Plus } from "next/font/google";
 import MenuPanel from "./MenuPanel";
 import SearchModal from "./SearchModal";
+import AuthModal from "./AuthModal";
 
 const gentiumBookPlus = Gentium_Book_Plus({
     subsets: ["latin"],
@@ -16,6 +17,7 @@ export default function NavBar() {
     const [menuPanel, setMenuPanel] = useState(false);
     const [navBackground, setNavBackground] = useState(false);
     const [searchModal, setSearchModal] = useState(false)
+    const [authModal, setAuthModal] = useState(false)
 
     function displayNavBackground() {
         setNavBackground(true);
@@ -33,8 +35,12 @@ export default function NavBar() {
         setSearchModal((prevState) => !prevState);
     }
 
+    function displayAuthModal() {
+        setAuthModal((prevState) => !prevState);
+    }
+
     return (
-        <nav className="w-full h-[60px] lg:h-[100px] bg-white fixed top-0 left-0 right-0 z-50">
+        <nav className="w-full h-[60px] lg:h-[100px] bg-white fixed top-0 left-0 right-0 z-30">
             <div className="w-full flex flex-col justify-center items-center pt-6 pb-3 gap-3">
                 {navBackground && (
                     <div className="absolute bg-[rgba(0,0,0,0.4)] h-screen w-full top-full"></div>
@@ -142,7 +148,7 @@ export default function NavBar() {
                                 </svg>
                             </Link>
 
-                            <Link href='/login' className="user hidden lg:flex cursor-pointer">
+                            <button type="button" className="user hidden lg:flex cursor-pointer" onClick={displayAuthModal}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -157,7 +163,7 @@ export default function NavBar() {
                                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                                     />
                                 </svg>
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -256,6 +262,7 @@ export default function NavBar() {
                 <MenuPanel display={menuPanel} />
             </div>
             {searchModal && <SearchModal handleClick={displaySearchModal} />}
+            {authModal && <AuthModal handleClick={displayAuthModal} />}
         </nav>
     );
 }
