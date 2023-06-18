@@ -3,6 +3,7 @@ import validator from "validator";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
+import { setCookie } from "cookies-next";
 
 const prisma = new PrismaClient();
 
@@ -78,7 +79,13 @@ export default async function handler(
             .setExpirationTime("24h")
             .sign(secret);
 
-        res.status(200).json({ user });
+        setCookie("jwt", token, { req, res, maxAge: 60 * 6 * 24 });
+
+        res.status(200).json({
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+        });
     }
 
     return res.status(404).json({ message: "Unknown Endpoint!" });

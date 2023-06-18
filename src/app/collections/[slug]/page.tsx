@@ -68,14 +68,16 @@ export default async function Collections({ params, searchParams }: { params?: {
     }
 
     return (
-        <div className="flex flex-col items-center gap-10">
+        <div className="flex justify-center items-center">
             {products.length != 0
                 ?
-                <>
-                    <Header title={title} products={products} />
-                    <Filter slug={title} />
-                    <Card products={products} />
-                </>
+                <div className="flex flex-col justify-center items-center">
+                    <div className="w-[95%] flex flex-col gap-10 relative">
+                        <Header title={title} products={products} />
+                        <Filter slug={title} />
+                        <Card products={products} />
+                    </div>
+                </div>
                 :
                 <p className="text-[2rem] md:text-[5rem] font-bold mt-10 uppercase text-center">NO PRODUCT FOUND!!!</p>
             }

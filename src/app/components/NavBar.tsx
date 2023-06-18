@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useRouter } from "next/navigation"
 import { Gentium_Book_Plus } from "next/font/google";
 import MenuPanel from "./MenuPanel";
 import SearchModal from "./SearchModal";
 import AuthModal from "./AuthModal";
+import { authContext } from "../context/AuthContext";
 
 const gentiumBookPlus = Gentium_Book_Plus({
     subsets: ["latin"],
@@ -14,10 +16,12 @@ const gentiumBookPlus = Gentium_Book_Plus({
 });
 
 export default function NavBar() {
+    const router = useRouter()
     const [menuPanel, setMenuPanel] = useState(false);
     const [navBackground, setNavBackground] = useState(false);
     const [searchModal, setSearchModal] = useState(false)
     const [authModal, setAuthModal] = useState(false)
+    const { data } = useContext(authContext);
 
     function displayNavBackground() {
         setNavBackground(true);
@@ -148,7 +152,7 @@ export default function NavBar() {
                                 </svg>
                             </Link>
 
-                            <button type="button" className="user hidden lg:flex cursor-pointer" onClick={displayAuthModal}>
+                            <button type="button" className="user hidden lg:block cursor-pointer relative" onClick={data ? () => { router.push(`/profile`) } : displayAuthModal}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"

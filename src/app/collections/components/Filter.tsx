@@ -11,8 +11,8 @@ export default function Filter({ slug }: { slug: string | undefined }) {
     }
 
     return (
-        <div className="sticky top-0">
-            <div className="sticky top-0 flex gap-10">
+        <div className="sticky top-40">
+            <div className="flex h-min gap-10">
                 <div className="">
                     <button type="button" onClick={showFilterModal} className="bg-primary-gray h-12 w-min px-4 flex justify-center items-center rounded-md text-lg">FILTERS</button>
                     {filterModal && <FilterModal handleClick={showFilterModal} slug={slug} />}

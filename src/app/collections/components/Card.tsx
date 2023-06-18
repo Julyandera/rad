@@ -8,7 +8,7 @@ interface PropsType {
 
 export default function Card({ products }: PropsType) {
     return (
-        <div className="w-[95%] grid grid-cols-2 lg:grid-cols-4 gap-[.1rem]">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-[.1rem]">
             {products.map((product, index) => (
                 <Link href={`/product/${product.slug}`} key={index} className='flex flex-col gap-3 shadow-[0_0_0_0.1rem_rgba(206,206,206,1)] py-5'>
                     <div className='w-full px-5'>

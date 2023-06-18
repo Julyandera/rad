@@ -46,7 +46,7 @@ const fetchProductData = async (slug: string): Promise<Product> => {
     })
 
     if (!product) {
-        throw new Error()
+        throw new Error("Can't find product")
     }
 
     return product
